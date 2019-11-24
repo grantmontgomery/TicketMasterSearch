@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { SearchBox } from "./components";
 
 class App extends Component {
   state = {};
   render() {
-    return <p>Hallo Welt!</p>;
+    return <SearchBox></SearchBox>;
   }
 }
 
