@@ -1,12 +1,26 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 class SearchBox extends Component {
-  state = {
-    location: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: ""
+    };
+  }
 
   inputChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+  };
+
+  submitQuery = event => {
+    event.preventDefault();
+    const { location } = this.state;
+    if (location === "") {
+      alert("Must enter location.");
+    } else {
+      this.props.makeCall(location);
+      this.setState({ location: "" });
+    }
   };
   render() {
     return (
@@ -21,7 +35,7 @@ class SearchBox extends Component {
         />
         <br />
         <DatePicker></DatePicker>
-        <button>Submit</button>
+        <button onClick={e => this.submitQuery(e)}>Submit</button>
       </form>
     );
   }
