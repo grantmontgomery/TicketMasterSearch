@@ -1,17 +1,23 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 class SearchBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: ""
+      location: "",
+      date: new Date()
     };
   }
 
   inputChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-
+  handleChange = date => {
+    this.setState({
+      date: date
+    });
+  };
   submitQuery = event => {
     event.preventDefault();
     const { location } = this.state;
@@ -23,6 +29,7 @@ class SearchBox extends Component {
     }
   };
   render() {
+    console.log(this.state.date);
     return (
       <form action="">
         <label htmlFor="">Location</label>
@@ -34,7 +41,11 @@ class SearchBox extends Component {
           onChange={e => this.inputChange(e)}
         />
         <br />
-        <DatePicker></DatePicker>
+        <DatePicker
+          name="date"
+          selected={this.state.date}
+          onChange={this.handleChange}
+        ></DatePicker>
         <button onClick={e => this.submitQuery(e)}>Submit</button>
       </form>
     );
