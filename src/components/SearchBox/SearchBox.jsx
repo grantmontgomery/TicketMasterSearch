@@ -6,16 +6,22 @@ class SearchBox extends Component {
     super(props);
     this.state = {
       location: "",
-      date: new Date()
+      date: new Date(),
+      formatted: ``
     };
   }
 
   inputChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
+  // 2019-11-22T18:00:00Z
   handleChange = date => {
+    let minutes = date.getMinutes() !== 30 ? date.getMinutes() + "0" : 30;
     this.setState({
-      date: date
+      date: date,
+      formatted: `${date.getFullYear()}-${date.getMonth() +
+        1}-${date.getDate()}T${date.getHours()}:${minutes}:${date.getSeconds()}0Z`
     });
   };
   submitQuery = event => {
@@ -29,7 +35,7 @@ class SearchBox extends Component {
     }
   };
   render() {
-    console.log(this.state.date);
+    console.log(this.state.formatted);
     return (
       <form action="">
         <label htmlFor="">Location</label>
@@ -45,6 +51,8 @@ class SearchBox extends Component {
           name="date"
           selected={this.state.date}
           onChange={this.handleChange}
+          showTimeSelect
+          dateFormat="Pp"
         ></DatePicker>
         <button onClick={e => this.submitQuery(e)}>Submit</button>
       </form>
