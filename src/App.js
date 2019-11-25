@@ -4,8 +4,8 @@ import { SearchBox } from "./components";
 class App extends Component {
   state = {};
 
-  makeCall = location => {
-    console.log(location);
+  makeCall = (location, date) => {
+    console.log(location, date);
   };
   render() {
     return <SearchBox makeCall={this.makeCall}></SearchBox>;

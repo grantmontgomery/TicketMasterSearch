@@ -7,7 +7,8 @@ class SearchBox extends Component {
     this.state = {
       location: "",
       date: new Date(),
-      formatted: ``
+      startFormatted: ``,
+      endFormatted: ``
     };
   }
 
@@ -17,25 +18,71 @@ class SearchBox extends Component {
 
   // 2019-11-22T18:00:00Z
   handleChange = date => {
-    let minutes = date.getMinutes() !== 30 ? date.getMinutes() + "0" : 30;
+    let months =
+      date.getMonth() === 0
+        ? `0${1}`
+        : date.getMonth() + 1 < 10
+        ? "0" + (date.getMonth() + 1)
+        : date.getMonth() + 1;
+    let days =
+      date.getDate() === 0
+        ? date.getDate() + "0"
+        : date.getDate() < 10
+        ? "0" + date.getDate()
+        : date.getDate();
+    let hours =
+      date.getHours() === 0
+        ? date.getHours() + "0"
+        : date.getHours() < 10
+        ? "0" + date.getHours()
+        : date.getHours();
+    let minutes =
+      date.getMinutes() === 0
+        ? date.getMinutes() + "0"
+        : date.getMinutes() < 10
+        ? "0" + date.getMinutes()
+        : date.getMinutes();
+    let seconds =
+      date.getSeconds() === 0
+        ? date.getSeconds() + "0"
+        : date.getSeconds() < 10
+        ? "0" + date.getSeconds()
+        : date.getSeconds();
+
+    let endDate = { year: "", month: "", day: "" };
+    if (date.getDate() === 31 && date.getMonth() === 12) {
+      endDate.year = `${date.getFullYear() + 1}`
+      endDate.month = `0${1}`
+      endDate.day = `0${1}`
+      ;
+    }
+    else{
+      date.getHours() > 15 ? endDate 
+    }
+
+
+
     this.setState({
       date: date,
-      formatted: `${date.getFullYear()}-${date.getMonth() +
-        1}-${date.getDate()}T${date.getHours()}:${minutes}:${date.getSeconds()}0Z`
+      startFormatted: `${date.getFullYear()}-${months}-${days}T${hours}:${minutes}:${seconds}Z`
     });
   };
   submitQuery = event => {
     event.preventDefault();
-    const { location } = this.state;
-    if (location === "") {
-      alert("Must enter location.");
+    const { location, startFormatted } = this.state;
+    if (location === "" && startFormatted === "") {
+      alert("Must enter a location and select a date and time");
+    } else if (location === "" && startFormatted !== "") {
+      alert("Must enter a location");
+    } else if (startFormatted === "" && location !== "") {
+      alert("Must select a date and time");
     } else {
-      this.props.makeCall(location);
-      this.setState({ location: "", date: new Date(), formatted: "" });
+      this.props.makeCall(location, startFormatted);
+      this.setState({ location: "", date: new Date(), startFormatted: "" });
     }
   };
   render() {
-    console.log(this.state.formatted);
+    console.log(this.state.startFormatted);
     return (
       <form action="">
         <label htmlFor="">Location</label>
@@ -47,6 +94,7 @@ class SearchBox extends Component {
           onChange={e => this.inputChange(e)}
         />
         <br />
+        <label htmlFor="">Date/Time</label>
         <DatePicker
           name="date"
           selected={this.state.date}
