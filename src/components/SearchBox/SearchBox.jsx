@@ -31,7 +31,7 @@ class SearchBox extends Component {
       alert("Must enter location.");
     } else {
       this.props.makeCall(location);
-      this.setState({ location: "" });
+      this.setState({ location: "", date: new Date(), formatted: "" });
     }
   };
   render() {
