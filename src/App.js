@@ -13,8 +13,8 @@ class App extends Component {
       method: "POST",
       body: JSON.stringify({ location, startDateTime, endDateTime })
     })
-      .then(res => console.log(res))
-      // .then(data => console.log(data))
+      .then(res => res.json())
+      .then(data => console.log(data._embedded.events))
       .catch(err => console.log(err.message));
   };
   render() {
