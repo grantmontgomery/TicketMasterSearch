@@ -1,0 +1,9 @@
+.result {
+  height: fit-content;
+  width: fit-content;
+}
+
+.result > img {
+  height: 100px;
+  width: auto;
+}

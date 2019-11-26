@@ -1,8 +1,14 @@
 import React, { Component } from "react";
 import { SearchBox } from "./components";
+import { Results } from "./components";
 
 class App extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      Results: []
+    };
+  }
 
   makeCall = (location, startDateTime, endDateTime) => {
     fetch("http://localhost:5000/TicketMasterSearch", {
@@ -14,11 +20,19 @@ class App extends Component {
       body: JSON.stringify({ location, startDateTime, endDateTime })
     })
       .then(res => res.json())
-      .then(data => console.log(data._embedded.events))
+      .then(data => {
+        console.log(data._embedded.events);
+        this.setState({ Results: [...data._embedded.events] });
+      })
       .catch(err => console.log(err.message));
   };
   render() {
-    return <SearchBox makeCall={this.makeCall}></SearchBox>;
+    return (
+      <div>
+        <SearchBox makeCall={this.makeCall}></SearchBox>
+        <Results Results={this.state.Results}></Results>
+      </div>
+    );
   }
 }
 
