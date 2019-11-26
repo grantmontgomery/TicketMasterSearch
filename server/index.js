@@ -18,7 +18,6 @@ app.post("/TicketMasterSearch", (req, res) => {
     ),
     arguments = {
       apikey: `${process.env.REACT_APP_TICKETMASTER_API_KEY}`,
-      postalCode: req.body.location,
       startDateTime: req.body.startDateTime,
       endDateTime: req.body.endDateTime,
       radius: 2000
@@ -27,6 +26,11 @@ app.post("/TicketMasterSearch", (req, res) => {
   Object.keys(arguments).forEach(key =>
     ticketMaster.searchParams.append(key, arguments[key])
   );
+
+  isNaN(parseInt(req.body.location)) === true
+    ? ticketMaster.searchParams.append("city", req.body.location)
+    : ticketMaster.searchParams.append("postalCode", req.body.location);
+
   fetch(ticketMaster)
     .then(res => res.json())
     .then(data => res.send(data))

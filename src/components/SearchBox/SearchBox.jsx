@@ -119,7 +119,7 @@ class SearchBox extends Component {
     console.log(this.state.endFormatted);
     return (
       <form action="">
-        <label htmlFor="">Zip Code</label>
+        <label htmlFor="">Location</label>
         <input
           type="text"
           value={this.state.location}
