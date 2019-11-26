@@ -11,7 +11,7 @@ app.use(json());
 app.use(urlEncoded({ extended: true }));
 app.use(cors());
 
-app.post("/", (req, res) => {
+app.post("/TicketMasterSearch", (req, res) => {
   const ticketMaster = new URL(
       "https://app.ticketmaster.com/discovery/v2/events"
     ),
@@ -19,7 +19,8 @@ app.post("/", (req, res) => {
       apikey: `${process.env.REACT_APP_TICKETMASTER_API_KEY}`,
       postalCode: req.body.location,
       startDateTime: req.body.startDateTime,
-      endDateTime: req.body.endDateTime
+      endDateTime: req.body.endDateTime,
+      radius: 2000
     };
 
   Object.keys(arguments).forEach(key =>
