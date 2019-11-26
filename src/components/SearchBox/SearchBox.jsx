@@ -7,7 +7,6 @@ class SearchBox extends Component {
     super(props);
     this.state = {
       location: "",
-      date: new Date(),
       startFormatted: "",
       endFormatted: ""
     };
@@ -17,42 +16,47 @@ class SearchBox extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  shouldComponentUpdate() {
+    console.log(this.state.startFormatted);
+    console.log(this.state.endFormatted);
+    return true;
+  }
   // 2019-11-22T18:00:00Z
   handleChange = date => {
-    date = new Date(date);
+    const selectedDate = new Date(date);
+    this.setState({ date: selectedDate });
     let months =
-      date.getMonth() === 0
+      selectedDate.getMonth() === 0
         ? `0${1}`
-        : date.getMonth() + 1 < 10
-        ? "0" + (date.getMonth() + 1)
-        : date.getMonth() + 1;
+        : selectedDate.getMonth() + 1 < 10
+        ? "0" + (selectedDate.getMonth() + 1)
+        : selectedDate.getMonth() + 1;
     let days =
-      date.getDate() === 0
-        ? date.getDate() + "0"
-        : date.getDate() < 10
-        ? "0" + date.getDate()
-        : date.getDate();
+      selectedDate.getDate() === 0
+        ? selectedDate.getDate() + "0"
+        : selectedDate.getDate() < 10
+        ? "0" + selectedDate.getDate()
+        : selectedDate.getDate();
     let hours =
-      date.getHours() === 0
-        ? date.getHours() + "0"
-        : date.getHours() < 10
-        ? "0" + date.getHours()
-        : date.getHours();
+      selectedDate.getHours() === 0
+        ? selectedDate.getHours() + "0"
+        : selectedDate.getHours() < 10
+        ? "0" + selectedDate.getHours()
+        : selectedDate.getHours();
     let minutes =
-      date.getMinutes() === 0
-        ? date.getMinutes() + "0"
-        : date.getMinutes() < 10
-        ? "0" + date.getMinutes()
-        : date.getMinutes();
+      selectedDate.getMinutes() === 0
+        ? selectedDate.getMinutes() + "0"
+        : selectedDate.getMinutes() < 10
+        ? "0" + selectedDate.getMinutes()
+        : selectedDate.getMinutes();
     let seconds =
-      date.getSeconds() === 0
-        ? date.getSeconds() + "0"
-        : date.getSeconds() < 10
-        ? "0" + date.getSeconds()
-        : date.getSeconds();
+      selectedDate.getSeconds() === 0
+        ? selectedDate.getSeconds() + "0"
+        : selectedDate.getSeconds() < 10
+        ? "0" + selectedDate.getSeconds()
+        : selectedDate.getSeconds();
     this.setState({
-      date: date,
-      startFormatted: `${date.getFullYear()}-${months}-${days}T${hours}:${minutes}:${seconds}Z`
+      startFormatted: `${selectedDate.getFullYear()}-${months}-${days}T${hours}:${minutes}:${seconds}Z`
     });
     //Endformat of next day
     let nextDay = new Date(date.setDate(date.getDate() + 1));
@@ -107,10 +111,12 @@ class SearchBox extends Component {
       alert("Must select a date and time");
     } else {
       this.props.makeCall(location, startFormatted, endFormatted);
-      this.setState({ location: "", date: new Date(), startFormatted: "" });
+      this.setState({ location: "", date: "", startFormatted: "" });
     }
   };
   render() {
+    console.log(this.state.startFormatted);
+    console.log(this.state.endFormatted);
     return (
       <form action="">
         <label htmlFor="">Zip Code</label>
