@@ -100,9 +100,9 @@ class SearchBox extends Component {
     event.preventDefault();
     const { location, endFormatted, startFormatted } = this.state;
     if (location === "" && startFormatted === "") {
-      alert("Must enter a location and select a date and time");
+      alert("Must enter a zipcode and select a date and time");
     } else if (location === "" && startFormatted !== "") {
-      alert("Must enter a location");
+      alert("Must enter a zipcode");
     } else if (startFormatted === "" && location !== "") {
       alert("Must select a date and time");
     } else {
@@ -113,7 +113,7 @@ class SearchBox extends Component {
   render() {
     return (
       <form action="">
-        <label htmlFor="">Location</label>
+        <label htmlFor="">Zip Code</label>
         <input
           type="text"
           value={this.state.location}

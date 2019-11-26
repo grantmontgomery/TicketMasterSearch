@@ -10,7 +10,7 @@ class Result extends Component {
   render() {
     return (
       <div className="result">
-        <img src={this.props.Result.images[0]} alt="" />
+        <img src={this.props.Result.images[0].url} alt="" />
         <p>{this.props.Result.name}</p>
         <p>{this.props.Result.dates.start.localDate}</p>
         <p>{this.props.Result.dates.start.localTime}</p>
