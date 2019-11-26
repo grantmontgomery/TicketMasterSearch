@@ -5,10 +5,6 @@ class App extends Component {
   state = {};
 
   makeCall = (location, startDateTime, endDateTime) => {
-    console.log(location);
-    console.log(startDateTime);
-    console.log(endDateTime);
-
     fetch("http://localhost:5000/TicketMasterSearch", {
       headers: {
         Accept: "application/json",
@@ -17,8 +13,8 @@ class App extends Component {
       method: "POST",
       body: JSON.stringify({ location, startDateTime, endDateTime })
     })
-      .then(res => res.json())
-      .then(data => console.log(data))
+      .then(res => console.log(res))
+      // .then(data => console.log(data))
       .catch(err => console.log(err.message));
   };
   render() {
