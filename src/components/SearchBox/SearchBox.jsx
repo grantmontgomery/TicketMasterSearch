@@ -124,7 +124,7 @@ class SearchBox extends Component {
           type="text"
           value={this.state.location}
           name="location"
-          placeholder="Enter in a city or zipcode"
+          placeholder="ex. 90015, Los Angeles, CA"
           onChange={e => this.inputChange(e)}
         />
         <br />
